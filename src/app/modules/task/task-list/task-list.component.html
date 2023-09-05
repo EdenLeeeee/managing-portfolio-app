@@ -1,3 +1,63 @@
-<p>
-  task-list works!
-</p>
+<div class="task-list">
+  <h1>Task Managing List</h1>
+  <div class="action-container">
+    <span class="add-task" (click)="add()">Add task</span>
+    <div>
+      <mat-form-field class="search-form-field" appearance="outline">
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="table-wrapper">
+    <table mat-table [dataSource]="dataSource" class="task-list-table">
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Task</th>
+        <td mat-cell *matCellDef="let element">{{element.description}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="assignee">
+        <th mat-header-cell *matHeaderCellDef>Assignee</th>
+        <td mat-cell *matCellDef="let element">
+          <div [class.non-assigned]="!element.assignee && !element.completed"
+            [class.completed-without-assignee]="!element.assignee && element.completed"
+            (click)="!element.assignee && !element.completed && onGoToDetail(element.id)">
+            {{element.assignee || (element.completed ? 'None' : 'Choose Assignee')}}</div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="completed">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="status" [class.completed]="element.completed">
+            <span>{{element.completed ? 'Completed' : 'In progress' }}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button title="Complete Task" mat-icon-button [class.pointer-none]="element.completed">
+            <mat-icon *ngIf="!element.completed" (click)="onCompleted(element.id)">check</mat-icon>
+          </button>
+          <button mat-icon-button (click)="onGoToDetail(element.id)">
+            <mat-icon>remove_red_eye</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- <ng-container matColumnDef="progress">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns?.length">
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </td>
+      </ng-container> -->
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr class="mat-row text-center" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data</td>
+      </tr>
+    </table>
+  </div>
+</div>

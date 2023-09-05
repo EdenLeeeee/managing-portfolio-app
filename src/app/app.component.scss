@@ -1,0 +1,73 @@
+@import "../assets/styles/variables.scss";
+@import "../assets/styles/mixins.scss";
+
+@mixin updateBorderColorFormField($color) {
+  .mat-form-field-outline {
+    color: $color;
+    opacity: 1;
+  }
+}
+
+::ng-deep {
+  .mat-table {
+    .mat-header-row {
+      background-color: $primary-color;
+      height: 2.25rem;
+      .mat-header-cell {
+        color: $white-color;
+        font-size: .875rem;
+      }
+    }
+    .mat-row {
+      .mat-cell {
+        color: $text-table;
+      }
+
+      &:hover {
+        background-color: $action-table;
+      }
+    }
+  }
+
+  .mat-dialog-container {
+    .mat-dialog-actions {
+      @include actions-position();
+    }
+  }
+
+  .mat-form-field {
+    .mat-form-field-wrapper {
+      background-color: $white-color;
+
+      .mat-form-field-flex {
+        @include updateBorderColorFormField($text-table);
+
+        .mat-form-field-infix {
+          border: unset;
+
+          .mat-input-element:disabled {
+            color: unset;
+          }
+
+          .mat-select {
+            .mat-select-arrow-wrapper {
+              transform: translateY(15%);
+            }
+          }
+        }
+      }
+
+      .mat-form-field-subscript-wrapper {
+        padding: 0;
+      }
+    }
+  }
+
+  .mat-form-field.mat-form-field-invalid {
+    .mat-form-field-wrapper {
+      .mat-form-field-flex {
+        @include updateBorderColorFormField($error);
+      }
+    }
+  }
+}

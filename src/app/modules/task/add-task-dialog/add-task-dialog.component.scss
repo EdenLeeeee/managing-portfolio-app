@@ -1,0 +1,10 @@
+@import '../../../../assets/styles/variables.scss';
+
+#add-task-dialog {
+  .sub-title {
+    color: $subtitle;
+  }
+  .description-form-field {
+    width: 100%;
+  }
+}

@@ -1,3 +1,4 @@
-<p>
-  task works!
-</p>
+<div class="main-container">
+  <app-task-list [taskData]="tasks" [isLoading]="isLoading" (addTask)="addTask()"
+    (completed)="completed($event)"></app-task-list>
+</div>

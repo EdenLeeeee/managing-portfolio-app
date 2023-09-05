@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 const appRoutes: Routes = [
   {
-    path: '',
+    path: 'tasks',
     loadChildren: () =>
       import('./modules/task/task.module').then(module => module.TaskModule)
   }

@@ -1,0 +1,97 @@
+@import "../../../../assets/styles/variables.scss";
+@import "../../../../assets/styles/mixins.scss";
+
+@mixin fixed-width($value) {
+  width: $value;
+  max-width: $value;
+  min-width: $value;
+}
+
+.task-list {
+  @include flex-col();
+  padding: $padding-container 0;
+  height: calc(100vh - #{$padding-container * 2});
+
+  .action-container {
+    margin-top: 2.5rem;
+    padding: .5rem .9375rem .5rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3.25rem;
+    background-color: $action-table;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    .add-task {
+      cursor: pointer;
+      color: $primary-color;
+      font-weight: 700;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    ::ng-deep .search-form-field {
+      .mat-form-field-wrapper {
+        padding: 0;
+      }
+    }
+  }
+
+  .pointer-none {
+    pointer-events: none;
+    cursor: unset;
+  }
+
+  .non-assigned {
+    cursor: pointer;
+    color: $choose-assignee-button;
+    border: 2px solid $choose-assignee-button;
+    height: 1.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    padding: 0 .625rem;
+    border-radius: 4px;
+    font-weight: 500;
+
+    &:hover {
+      color: $white-color;
+      background-color: $choose-assignee-button;
+    }
+  }
+
+  .completed-without-assignee {
+    color: $error;
+  }
+
+  .table-wrapper {
+    flex: 1;
+    overflow: auto;
+  }
+
+  &-table {
+    width: 100%;
+    table-layout: fixed;
+
+    .mat-column {
+      &-description {
+        padding-right: 1.25rem;
+        @include fixed-width(15.625rem);
+        @include truncated-text();
+      }
+      &-assignee {
+        @include fixed-width(10rem);
+      }
+      &-action {
+        @include fixed-width(5rem);
+        text-align: center;
+      }
+      &-completed {
+        @include fixed-width(6rem);
+      }
+    }
+  }
+}

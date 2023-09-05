@@ -1,1 +1,64 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./assets/styles/variables.scss";
+@import "./assets/styles/mixins.scss";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.main-container {
+  max-width: 60rem;
+  min-width: 18.75rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  box-shadow: 0 0 10px $text-table;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.primary-button {
+  @include primary-button();
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.cancel-button {
+  color: $text-table;
+}
+
+.status {
+  height: 1.75rem;
+  background-color: $inprogress;
+  color: $inprogress-text;
+  padding: .25rem .5rem;
+  border-radius: 5px;
+  line-height: 1.75rem;
+  width: fit-content;
+  font-weight: 500;
+}
+
+.completed {
+  background-color: $completed;
+  color: $white-color;
+}
+
+.underline-btn {
+  text-decoration: underline;
+  color: $primary-color;
+  font-size: .75rem;
+  cursor: pointer;
+  width: fit-content;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

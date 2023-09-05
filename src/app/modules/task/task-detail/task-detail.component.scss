@@ -1,0 +1,32 @@
+@import '../../../../assets/styles/variables.scss';
+@import '../../../../assets/styles/mixins.scss';
+
+.task-detail {
+  padding: $padding-container 0;
+
+  .content {
+    @include flex-col();
+    margin-bottom: .9375rem;
+
+    > span {
+      font-weight: 700;
+    }
+
+    .description-form-field {
+      min-width: 18.75rem;
+    }
+
+    .select-assignee {
+      width: 18.75rem;
+
+      &.readonly {
+        pointer-events: none;
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    @include actions-position;
+  }
+}

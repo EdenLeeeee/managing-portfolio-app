@@ -1,0 +1,22 @@
+<div id="add-task-dialog">
+  <h1 mat-dialog-title>Add Task</h1>
+  <mat-dialog-content>
+    <span class="sub-title">Write the description for new task.</span>
+    <form [formGroup]="formGroup">
+      <mat-form-field class="description-form-field" appearance="outline">
+        <textarea matInput formControlName="description" placeholder="Description"></textarea>
+        <mat-error *ngIf="description?.touched && description.invalid">
+          Please enter description
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button [disabled]="!description?.value?.length" class="primary-button" mat-flat-button (click)="confirm()">
+      Confirm
+    </button>
+    <button class="cancel-button" mat-stroked-button mat-dialog-close>
+      Cancel
+    </button>
+  </mat-dialog-actions>
+</div>

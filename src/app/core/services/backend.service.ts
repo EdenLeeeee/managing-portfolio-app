@@ -17,6 +17,7 @@ export type Task = {
   id: number;
   description: string;
   assigneeId: number;
+  assignee?: string;
   completed: boolean;
 };
 
@@ -31,13 +32,15 @@ export class BackendService {
       id: 0,
       description: 'Install a monitor arm',
       assigneeId: 111,
+      assignee: 'Mike',
       completed: false
     },
     {
       id: 1,
       description: 'Move the desk to the new location',
       assigneeId: 111,
-      completed: false
+      assignee: 'Mike',
+      completed: true
     }
   ];
 
@@ -45,9 +48,24 @@ export class BackendService {
 
   lastId = 1;
 
+  constructor() {
+    this.initTask();
+  }
+
   private findTaskById = id => this.storedTasks.find(task => task.id === +id);
 
   private findUserById = id => this.storedUsers.find(user => user.id === +id);
+
+  initTask() {
+    for (let i = 0; i < 20; i++) {
+      this.storedTasks.push({
+        id: ++this.lastId,
+        description: `test description ${this.lastId}`,
+        assigneeId: null,
+        completed: false
+      });
+    }
+  }
 
   tasks() {
     return of(this.storedTasks).pipe(delay(randomDelay()));
@@ -93,7 +111,13 @@ export class BackendService {
       return throwError(new Error('task not found'));
     }
 
-    const updatedTask = { ...foundTask, ...updates };
+    const findUser = this.findUserById(foundTask.assigneeId);
+
+    const updatedTask = {
+      ...foundTask,
+      ...updates,
+      ...{ assignee: findUser?.name }
+    };
 
     this.storedTasks = this.storedTasks.map(
       t => (t.id === taskId ? updatedTask : t)

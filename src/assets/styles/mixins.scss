@@ -1,0 +1,22 @@
+@import '../styles/variables.scss';
+
+@mixin truncated-text() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin primary-button() {
+  background-color: $primary-color;
+  color: $white-color;
+}
+
+@mixin flex-col() {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin actions-position() {
+  gap: .625rem;
+  justify-content: flex-end;
+}
