@@ -1,8 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BackendService, Task, User } from 'core';
-import { finalize, tap } from 'rxjs/operators';
+import { BackendService, SnackbarService, Task, User } from 'core';
+import { of } from 'rxjs';
+import { finalize, tap, catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-detail',
@@ -19,10 +20,11 @@ export class TaskDetailComponent implements OnInit {
   @Output() closeDetail = new EventEmitter();
 
   constructor(
-    private activateRoute: ActivatedRoute,
-    private router: Router,
-    private backend: BackendService,
-    private fb: FormBuilder
+    private _activateRoute: ActivatedRoute,
+    private _router: Router,
+    private _backend: BackendService,
+    private _fb: FormBuilder,
+    private _snackBarService: SnackbarService
   ) {
     this.initData();
   }
@@ -32,18 +34,23 @@ export class TaskDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.taskId = +this.activateRoute.snapshot.paramMap.get('id');
+    this.taskId = +this._activateRoute.snapshot.paramMap.get('id');
     this.getUserList();
     this.handleGetTask(this.taskId);
   }
 
   save() {
-    console.log('save');
-    console.log(this.formGroup.getRawValue());
     this.setIsLoading(true);
-    this.backend.update(this.taskId, this.formGroup.getRawValue()).pipe(
+    this._backend.update(this.taskId, this.formGroup.getRawValue()).pipe(
+      catchError(err => {
+        this._snackBarService.openSnackBar(err?.message, true);
+        return of();
+      }),
       finalize(() => this.setIsLoading())).subscribe((res) => {
         if (res) {
+          this._snackBarService.openSnackBar(
+            `Update task #${this.taskId} successfully`,
+          );
           this.onCloseDetail();
         }
       })
@@ -55,7 +62,7 @@ export class TaskDetailComponent implements OnInit {
   }
 
   onCloseDetail() {
-    this.router.navigate(['tasks']);
+    this._router.navigate(['tasks']);
   }
 
   private handleGetTask(taskId: number) {
@@ -64,9 +71,8 @@ export class TaskDetailComponent implements OnInit {
   }
 
   private getTask(taskId: number) {
-    return this.backend.task(taskId).pipe(
+    return this._backend.task(taskId).pipe(
       tap(res => {
-        console.log(res);
         if (res) {
           this.isCompleted = res.completed;
           this.initData(res);
@@ -77,7 +83,7 @@ export class TaskDetailComponent implements OnInit {
   }
 
   private getUserList() {
-    this.backend.users().subscribe(res => {
+    this._backend.users().subscribe(res => {
       if (res) {
         this.userList = res;
       }
@@ -89,14 +95,13 @@ export class TaskDetailComponent implements OnInit {
   }
 
   private initData(res?: Task) {
-    this.formGroup = this.fb.group({
+    this.formGroup = this._fb.group({
       description: [res?.description, Validators.required],
       assigneeId: {value: res?.assigneeId, disabled: this.isCompleted},
       completed: res?.completed
     });
 
     if (this.isCompleted) {
-      console.log('cccc');
       this.formGroup.disable();
     }
   }

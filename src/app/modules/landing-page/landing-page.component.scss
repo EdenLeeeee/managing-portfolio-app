@@ -1,0 +1,40 @@
+@import 'mixins';
+@import 'variables';
+
+@mixin setFont($value) {
+  font-size: $value;
+  line-height: $value;
+}
+
+.landing-page {
+  @include flex-col;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: $landing-page-color;
+
+  > div {
+    width: 56.25rem;
+    text-align: center;
+    gap: 1.875rem;
+    align-items: center;
+    @include flex-col;
+  }
+
+  .title {
+    @include animationShowRight(0, 2s);
+    @include setFont(4rem);
+    line-height: 80px;
+    font-weight: 600;
+  }
+
+  .content {
+    @include animationShowRight(1.5s, 2.5s);
+    @include setFont(1.5rem);
+  }
+
+  .primary-button {
+    z-index: 1;
+    @include animationShowRight(2s, 2s, $landing-page-color);
+  }
+}

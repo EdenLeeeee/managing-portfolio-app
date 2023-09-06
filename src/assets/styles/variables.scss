@@ -5,7 +5,15 @@ $inprogress: #e4cf53;
 $inprogress-text: #9e360f;
 $text-table: #667080;
 $error: #db504a;
-$subtitle: #15192080;
 $completed: #00804c;
 $padding-container: 2.5rem;
 $choose-assignee-button: #919aa9;
+$search-icon: #868fa0;
+$box-shadow-input: 0px 0px 0px 1px rgba(104, 113, 130, 0.16),
+  0px 1px 2px 0px rgba(0, 0, 0, 0.06);
+$landing-page-color: linear-gradient(
+  90deg,
+  rgba(238, 174, 202, 1) 0%,
+  rgba(148, 187, 233, 1) 100%
+);
+$font-family: 'Poppins';

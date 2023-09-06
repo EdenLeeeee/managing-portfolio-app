@@ -47,6 +47,7 @@ export class BackendService {
   storedUsers: User[] = [{ id: 111, name: 'Mike' }, { id: 222, name: 'James' }];
 
   lastId = 1;
+  taskSize = 100;
 
   constructor() {
     this.initTask();
@@ -57,7 +58,7 @@ export class BackendService {
   private findUserById = id => this.storedUsers.find(user => user.id === +id);
 
   initTask() {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < this.taskSize; i++) {
       this.storedTasks.push({
         id: ++this.lastId,
         description: `test description ${this.lastId}`,
@@ -91,7 +92,7 @@ export class BackendService {
       completed: false
     };
 
-    this.storedTasks = this.storedTasks.concat(newTask);
+    this.storedTasks = [newTask,...this.storedTasks];
 
     return of(newTask).pipe(delay(randomDelay()));
   }
@@ -111,7 +112,7 @@ export class BackendService {
       return throwError(new Error('task not found'));
     }
 
-    const findUser = this.findUserById(foundTask.assigneeId);
+    const findUser = this.findUserById(updates.assigneeId || foundTask.assigneeId);
 
     const updatedTask = {
       ...foundTask,

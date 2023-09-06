@@ -19,6 +19,9 @@
       "core": [
         "app/core/index.ts"
       ],
+      "shared": [
+        "app/shared/index.ts"
+      ]
     },
   },
   "angularCompilerOptions": {

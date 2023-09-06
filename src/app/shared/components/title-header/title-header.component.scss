@@ -1,0 +1,12 @@
+@import 'mixins';
+
+.title-header {
+  @include justify-between;
+  align-items: center;
+  padding-bottom: 1.25rem;
+  height: 2.5rem;
+
+  h1 {
+    margin: 0;
+  }
+}

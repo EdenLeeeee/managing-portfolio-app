@@ -1,13 +1,19 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { BackendService } from './services/backend.service';
+import { BackendService } from 'core';
+import { ChildrenOutletContexts } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('AppComponent', () => {
   beforeEach(
     waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [AppComponent],
-        providers: [{ provide: BackendService, useValue: new BackendService() }]
+        imports: [BrowserAnimationsModule],
+        providers: [
+          { provide: BackendService, useValue: new BackendService() },
+          ChildrenOutletContexts
+        ]
       }).compileComponents();
     })
   );
@@ -16,12 +22,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h2').textContent).toContain('Tasks');
   });
 });

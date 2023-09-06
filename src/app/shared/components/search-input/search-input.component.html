@@ -1,0 +1,7 @@
+<div id="search-input">
+  <mat-icon>search</mat-icon>
+  <mat-form-field class="search-form-field" appearance="outline">
+    <input matInput (keyup)="onChange($event)" [value]="inputValue" placeholder="Filter Search" />
+  </mat-form-field>
+  <mat-icon class="cancel" *ngIf="inputValue?.length" (click)="onChange()">cancel</mat-icon>
+</div>

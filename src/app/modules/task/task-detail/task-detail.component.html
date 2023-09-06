@@ -1,45 +1,44 @@
 <div class="main-container">
   <div class="task-detail">
-    <h1>Task Detail #{{taskId}}</h1>
-    <div class="detail" [formGroup]="formGroup">
-      <div class="content">
-        <span>Description</span>
-        <mat-form-field class="description-form-field" appearance="outline">
-          <textarea matInput [readonly]="isCompleted" formControlName="description"
-            placeholder="Description"></textarea>
-          <mat-error *ngIf="f['description']?.touched && f['description'].invalid">
-            Please enter description
-          </mat-error>
-        </mat-form-field>
-      </div>
-      <div class="content">
-        <span>Assignee</span>
-        <mat-form-field class="select-assignee" [class.readonly]="isCompleted" appearance="outline">
-          <mat-select formControlName="assigneeId">
-            <mat-option *ngFor=" let user of userList" [value]="user.id">
-              {{user.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="content">
-        <span>Status</span>
-        <div class="status" [class.completed]="f['completed'].value">
-          <span>{{f['completed'].value ? 'Completed' : 'In progress' }}</span>
-        </div>
-        <span *ngIf="!f['completed'].value" class="underline-btn" (click)="completed()">Do you want to complete this
-          task?</span>
-      </div>
-    </div>
+    <app-title-header titleStr="Task Detail #{{taskId}}" [isEdit]="true" [isShowSave]="!isCompleted"
+      [isDisabledSave]="!formGroup?.dirty || formGroup.invalid" (save)="save()"
+      (close)="onCloseDetail()"></app-title-header>
 
-    <div class="actions">
-      <button [disabled]="!formGroup?.dirty || formGroup.invalid" *ngIf="!isCompleted" class="primary-button"
-        mat-flat-button (click)="save()">
-        Save Changes
-      </button>
-      <button class="cancel-button" mat-stroked-button (click)="onCloseDetail()">
-        Cancel
-      </button>
+    <div class="detail" [class.spinner]="isLoading" [formGroup]="formGroup">
+      <ng-container *ngIf="!isLoading; else loadingTmpl">
+        <div class="content">
+          <span>Description</span>
+          <mat-form-field class="description-form-field" appearance="outline">
+            <textarea matInput [readonly]="isCompleted" formControlName="description"
+              placeholder="Description"></textarea>
+            <mat-error *ngIf="f['description']?.touched && f['description'].invalid">
+              Please enter description
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="content">
+          <span>Assignee</span>
+          <mat-form-field class="select-assignee" [class.readonly]="isCompleted" appearance="outline">
+            <mat-select formControlName="assigneeId">
+              <mat-option *ngFor=" let user of userList" [value]="user.id">
+                {{user.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="content">
+          <span>Status</span>
+          <div class="status" [class.completed]="f['completed'].value">
+            <span>{{f['completed'].value ? 'Completed' : 'In progress' }}</span>
+          </div>
+          <span *ngIf="!f['completed'].value" class="underline-btn" (click)="completed()">Do you want to complete this
+            task?</span>
+        </div>
+      </ng-container>
     </div>
   </div>
 </div>
+
+<ng-template #loadingTmpl>
+  <mat-spinner [diameter]="40"></mat-spinner>
+</ng-template>

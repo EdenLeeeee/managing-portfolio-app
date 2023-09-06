@@ -20,3 +20,31 @@
   gap: .625rem;
   justify-content: flex-end;
 }
+
+@mixin justify-between() {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin animationShowRight($delay, $duration: 1s, $background: $white-color) {
+  &::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    position: absolute;
+    background: $background;
+    animation-name: showRight;
+    animation-duration: $duration;
+    animation-delay: $delay;
+    animation-fill-mode: forwards;
+    z-index: 9999999999999;
+  }
+}
+
+@keyframes showRight {
+  100% {
+    width: 0;
+  }
+}

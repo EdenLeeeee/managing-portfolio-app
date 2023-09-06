@@ -1,12 +1,33 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatRow, MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { Constant, Task } from 'core';
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss']
 })
-export class TaskListComponent implements OnInit {
+export class TaskListComponent {
+  @ViewChildren(MatRow, { read: ElementRef }) rows!: QueryList<
+  ElementRef<HTMLTableRowElement>
+>;
+
+  private paginator: MatPaginator;
+  @ViewChild(MatPaginator , {static: false}) set matPaginator(mp: MatPaginator) {
+    this.paginator = mp;
+    this.dataSource.paginator = this.paginator;
+  }
+
   _taskData: Task[];
   get taskData(): Task[] {
     return this._taskData;
@@ -26,14 +47,12 @@ export class TaskListComponent implements OnInit {
     'assignee',
     'completed',
     'action'
-    // 'progress'
   ];
   dataSource = new MatTableDataSource<Task>([]);
+  pageSize: number;
 
-  constructor(private router: Router) {}
-
-  ngOnInit() {
-    console.log(this.taskData);
+  constructor(private router: Router, private constant: Constant) {
+    this.pageSize = this.constant.PAGE_SIZE;
   }
 
   add() {
@@ -48,8 +67,11 @@ export class TaskListComponent implements OnInit {
     this.router.navigate(['tasks', taskId]);
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue;
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

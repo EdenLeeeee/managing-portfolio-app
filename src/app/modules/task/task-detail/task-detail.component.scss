@@ -1,8 +1,12 @@
-@import '../../../../assets/styles/variables.scss';
-@import '../../../../assets/styles/mixins.scss';
+@import 'variables';
+@import 'mixins';
 
 .task-detail {
   padding: $padding-container 0;
+
+  .detail {
+    height: 21.25rem;
+  }
 
   .content {
     @include flex-col();
@@ -23,10 +27,5 @@
         pointer-events: none;
       }
     }
-  }
-
-  .actions {
-    display: flex;
-    @include actions-position;
   }
 }

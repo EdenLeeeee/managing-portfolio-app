@@ -1,0 +1,11 @@
+<div class="title-header">
+  <h1>{{titleStr}}</h1>
+  <div *ngIf="isEdit" class="actions">
+    <button *ngIf="isShowSave" [disabled]="isDisabledSave" mat-icon-button (click)="onSave()">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-icon-button (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

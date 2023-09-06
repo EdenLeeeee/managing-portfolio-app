@@ -1,10 +1,18 @@
-@import "../assets/styles/variables.scss";
-@import "../assets/styles/mixins.scss";
+@import "variables";
+@import "mixins";
 
 @mixin updateBorderColorFormField($color) {
   .mat-form-field-outline {
     color: $color;
     opacity: 1;
+  }
+}
+
+@mixin hoverScaleIcon($value) {
+  .mat-icon {
+    &:hover {
+      scale: $value;
+    }
   }
 }
 
@@ -40,18 +48,27 @@
       background-color: $white-color;
 
       .mat-form-field-flex {
-        @include updateBorderColorFormField($text-table);
+        @include updateBorderColorFormField($white-color);
+        border-radius: 6px;
+        box-shadow: $box-shadow-input;
+        border: 2px solid $white-color;
 
         .mat-form-field-infix {
           border: unset;
 
           .mat-input-element:disabled {
-            color: unset;
+            color: $text-table;
           }
 
           .mat-select {
             .mat-select-arrow-wrapper {
               transform: translateY(15%);
+            }
+          }
+
+          .mat-select-disabled {
+            .mat-select-value {
+              color: $text-table;
             }
           }
         }
@@ -66,8 +83,49 @@
   .mat-form-field.mat-form-field-invalid {
     .mat-form-field-wrapper {
       .mat-form-field-flex {
-        @include updateBorderColorFormField($error);
+        border-color: $error !important;
       }
     }
   }
+
+  .mat-form-field:not(.mat-form-field-disabled) {
+    .mat-form-field-wrapper {
+      .mat-form-field-flex {
+        &:hover,
+        &:focus-within {
+          border-color: $primary-color;
+        }
+      }
+    }
+  }
+
+  .mat-progress-spinner {
+    circle {
+      stroke: $primary-color;
+    }
+  }
+
+  .mat-icon-button {
+    &:not(.mat-button-disabled) {
+      .mat-icon {
+        color: $primary-color;
+      }
+    }
+
+    &.mat-button-disabled {
+      @include hoverScaleIcon(1);
+      .mat-icon {
+        &:hover {
+          scale: 1;
+        }
+      }
+    }
+  }
+
+  @include hoverScaleIcon(1.2);
+}
+
+.app-container {
+  height: 100%;
+  background: $landing-page-color;
 }

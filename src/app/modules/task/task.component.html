@@ -1,4 +1,4 @@
 <div class="main-container">
-  <app-task-list [taskData]="tasks" [isLoading]="isLoading" (addTask)="addTask()"
-    (completed)="completed($event)"></app-task-list>
+  <app-task-list [taskData]="tasks" [isLoading]="isLoading" (addTask)="addTask()" (completed)="completed($event)"
+    #appTaskList></app-task-list>
 </div>

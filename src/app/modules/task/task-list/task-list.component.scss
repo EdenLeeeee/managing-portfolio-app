@@ -1,5 +1,5 @@
-@import "../../../../assets/styles/variables.scss";
-@import "../../../../assets/styles/mixins.scss";
+@import 'variables';
+@import 'mixins';
 
 @mixin fixed-width($value) {
   width: $value;
@@ -18,10 +18,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 3.25rem;
     background-color: $action-table;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    flex-wrap: wrap;
+
     .add-task {
       cursor: pointer;
       color: $primary-color;
@@ -29,12 +30,6 @@
 
       &:hover {
         opacity: 0.8;
-      }
-    }
-
-    ::ng-deep .search-form-field {
-      .mat-form-field-wrapper {
-        padding: 0;
       }
     }
   }
@@ -67,9 +62,14 @@
     color: $error;
   }
 
-  .table-wrapper {
+  .list-data {
+    @include flex-col;
     flex: 1;
     overflow: auto;
+
+    .table-wrapper {
+      overflow: auto;
+    }
   }
 
   &-table {

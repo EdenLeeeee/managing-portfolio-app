@@ -6,11 +6,13 @@ import { TaskComponent } from './task.component';
 const routes: Routes = [
   {
     path: '',
-    component: TaskComponent
+    component: TaskComponent,
+    data: { animation: 'isLeft' }
   },
   {
     path: ':id',
-    component: TaskDetailComponent
+    component: TaskDetailComponent,
+    data: { animation: 'isRight' }
   }
 ];
 
