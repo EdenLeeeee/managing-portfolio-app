@@ -9,6 +9,7 @@
   background: $white-color;
   border: 2px solid $white-color;
   position: relative;
+  transition: border-color 0.2s;
 
   ::ng-deep {
     .mat-icon {

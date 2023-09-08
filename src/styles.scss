@@ -28,6 +28,7 @@ body {
 .primary-button {
   @include primary-button();
   width: fit-content;
+  transition: opacity 0.3s;
 
   &:hover {
     opacity: 0.8;
@@ -66,6 +67,7 @@ body {
   font-size: .75rem;
   cursor: pointer;
   width: fit-content;
+  transition: opacity 0.3s;
 
   &:hover {
     opacity: 0.8;

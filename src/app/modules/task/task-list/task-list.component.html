@@ -45,7 +45,8 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;" [id]="row.id"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" [id]="row.id" (click)="onGoToDetail(row.id)">
+          </tr>
 
           <tr class="mat-row text-center" *matNoDataRow>
             <td class="mat-cell" colspan="4">No data</td>

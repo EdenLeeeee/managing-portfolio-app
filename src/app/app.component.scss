@@ -10,6 +10,7 @@
 
 @mixin hoverScaleIcon($value) {
   .mat-icon {
+    transition: scale 0.2s;
     &:hover {
       scale: $value;
     }
@@ -52,6 +53,7 @@
         border-radius: 6px;
         box-shadow: $box-shadow-input;
         border: 2px solid $white-color;
+        transition: border-color 0.2s;
 
         .mat-form-field-infix {
           border: unset;
@@ -114,11 +116,6 @@
 
     &.mat-button-disabled {
       @include hoverScaleIcon(1);
-      .mat-icon {
-        &:hover {
-          scale: 1;
-        }
-      }
     }
   }
 
